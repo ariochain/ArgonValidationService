@@ -154,8 +154,15 @@ process_request (void *cls,
 
     *ptr = NULL;
 
-    argonHash = MHD_lookup_connection_value (connection, MHD_GET_ARGUMENT_KIND, "argon");
-    baseHash = MHD_lookup_connection_value (connection, MHD_GET_ARGUMENT_KIND, "base");
+    const char *param;
+
+    param = MHD_lookup_connection_value (connection, MHD_GET_ARGUMENT_KIND, "argon");
+    if(param != NULL)
+        argonHash = param;
+
+    param = MHD_lookup_connection_value (connection, MHD_GET_ARGUMENT_KIND, "base");
+    if(param != NULL)
+        baseHash = param;
 
     fix_query(argonHash);
     fix_query(baseHash);
