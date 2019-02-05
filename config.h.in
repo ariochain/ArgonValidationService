@@ -1,0 +1,12 @@
+//
+// Created by Haifa Bogdan Adnan on 04/02/2019.
+//
+
+#ifndef ARGONVALIDATIONSERVICE_CONFIG_H_IN_H
+#define ARGONVALIDATIONSERVICE_CONFIG_H_IN_H
+
+#define ArgonValidationService_VERSION_MAJOR "@ArgonValidationService_VERSION_MAJOR@"
+#define ArgonValidationService_VERSION_MINOR "@ArgonValidationService_VERSION_MINOR@"
+#define ArgonValidationService_VERSION_REVISION "@ArgonValidationService_VERSION_REVISION@"
+
+#endif //ARGONVALIDATIONSERVICE_CONFIG_H_IN_H
