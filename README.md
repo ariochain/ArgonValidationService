@@ -25,3 +25,5 @@ http://server:port/validate?argon=<argon>&base=<base>
 ```
 
 Response: plain text VALID or INVALID.
+
+Please be sure the requests is correct (meaning you use /validate, use proper params names and send properly formatted argon2 hashes for validation), otherwise it will reset connection. This is by design to avoid as much as possible an external attack.
