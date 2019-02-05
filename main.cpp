@@ -277,9 +277,7 @@ main (int argc, char *argv[])
             requests_count = 0;
             requests_lock.unlock();
             timestamp = time(NULL);
-            if(args.is_verbose()) {
-                LOG(to_string(tmp_reqs_count) + " validation calls per minute.");
-            }
+            LOG(to_string(tmp_reqs_count) + " validation calls per minute.");
         }
         sleep(1);
     };
