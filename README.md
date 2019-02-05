@@ -18,7 +18,7 @@ Parameters:
 
 ## API
 
-Call with argon and base parameters using GET:
+Call with argon (share from miner) and base (calculated password based on current block) parameters using GET:
 
 ```sh
 http://server:port/validate?argon=<argon>&base=<base>
