@@ -264,8 +264,10 @@ main (int argc, char *argv[])
     d = MHD_start_daemon (MHD_USE_THREAD_PER_CONNECTION | MHD_USE_INTERNAL_POLLING_THREAD,
                           args.port(),
                           NULL, NULL, &process_request, &args, MHD_OPTION_END);
-    if (d == NULL)
+    if (d == NULL) {
+        cout << "Error creating HTTP server, please check if port is not already busy." << endl;
         return 1;
+    }
 
     while(running) {
         if((time(NULL) - timestamp) >= 60) {
