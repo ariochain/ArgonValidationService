@@ -8,7 +8,7 @@ struct argon2_validation_request {
     string salt;
     string type;
     string hash;
-    bool orphan;
+    atomic_bool orphan;
     rk_sema semaphore;
 };
 
@@ -107,15 +107,18 @@ static void hasher(void *memory) {
             continue;
         }
 
-        argon2profile *profile;
-        if(request->type == "m=524288,t=1,p=1")
-            profile = &argon2profile_1_1_524288;
-        else
-            profile = &argon2profile_4_4_16384;
+        if(!request->orphan) {
+            argon2profile *profile;
+            if (request->type == "m=524288,t=1,p=1")
+                profile = &argon2profile_1_1_524288;
+            else
+                profile = &argon2profile_4_4_16384;
 
-        request->hash = hash_factory.generate_hash(*profile, request->base, request->salt);
+            request->hash = hash_factory.generate_hash(*profile, request->base, request->salt);
+        }
 
         if(request->orphan) {
+            rk_sema_destroy(&(request->semaphore));
             delete request;
         }
         else {
