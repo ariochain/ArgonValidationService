@@ -22,6 +22,7 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
+#include <atomic>
 
 #include <cmath>
 #include <signal.h>
@@ -77,7 +78,7 @@ rk_sema_wait(struct rk_sema *s, int timeout_sec)
     while ((r = sem_timedwait(&s->sem, &ts)) == -1 && errno == EINTR)
         continue;
 
-    return s != -1;
+    return r != -1;
 #endif
 }
 

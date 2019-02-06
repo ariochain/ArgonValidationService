@@ -6,6 +6,8 @@ set (ArgonValidationService_VERSION_MAJOR 0)
 set (ArgonValidationService_VERSION_MINOR 1)
 set (ArgonValidationService_VERSION_REVISION 0)
 
+find_package (Threads)
+
 find_path(MTHD_INCLUDE_DIR
         NAMES
         microhttpd.h
@@ -54,5 +56,5 @@ include_directories("${PROJECT_BINARY_DIR}")
 add_executable(ArgonValidationService ${SOURCE})
 
 target_compile_options(ArgonValidationService PRIVATE -march=native -mtune=native -O3)
-target_link_libraries(ArgonValidationService ${LIBS})
+target_link_libraries(ArgonValidationService ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
 

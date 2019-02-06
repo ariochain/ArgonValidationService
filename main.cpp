@@ -96,7 +96,11 @@ const char success[] = "VALID";
 
 bool running = false;
 
-static void hasher(void *memory) {
+static void hasher() {
+    size_t mem_size = argon2profile_1_1_524288.memsize + 64;
+    void *mem = malloc(mem_size);
+    void *memory = align(64, argon2profile_1_1_524288.memsize, mem, mem_size);
+
     argon2 hash_factory(memory);
 
     while(running) {
@@ -126,7 +130,7 @@ static void hasher(void *memory) {
         }
     }
 
-    free(memory);
+    free(mem);
 }
 
 static int
@@ -255,13 +259,12 @@ main (int argc, char *argv[])
     running = true;
 
     for(int i=0;i<cores;i++) {
-        void *memory = malloc(argon2profile_1_1_524288.memsize);
-        runners.push_back(new thread(hasher, memory));
+        runners.push_back(new thread(hasher));
     }
 
     LOG("Waiting for clients ...");
 
-    d = MHD_start_daemon (MHD_USE_THREAD_PER_CONNECTION | MHD_USE_INTERNAL_POLLING_THREAD,
+    d = MHD_start_daemon (MHD_USE_THREAD_PER_CONNECTION,
                           args.port(),
                           NULL, NULL, &process_request, &args, MHD_OPTION_END);
     if (d == NULL) {
